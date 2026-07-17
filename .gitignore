@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Build Files
+dist/
+build/
+.next/
+out/
+
+# Coverage
+coverage/
+
+# Runtime Files
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Turbo Repo
+.turbo/
+
+# Uploads
+server/uploads/
+
+# Testing
+jest.config.js.snap
+
+# TypeScript
+*.tsbuildinfo
+
+# Docker
+docker-data/
+
+# Misc
+*.zip
+*.tar
+*.gz
+
+# Mac
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+
+# Generated Files
+*.sqlite
+*.sqlite3
