@@ -1,3 +1,5 @@
+import { getDashboardStatsService } from './dashboard.service.js';
+
 export const getDashboardStats = async (req, res, next) => {
   try {
     const stats = await getDashboardStatsService();

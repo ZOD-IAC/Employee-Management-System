@@ -1,5 +1,6 @@
 import { loginService, refreshService } from './auth.service.js';
 import { cookieOptions } from '../../utils/helper.js';
+import Auth from '../auth/auth.model.js';
 
 // Login user
 export const login = async (req, res, next) => {

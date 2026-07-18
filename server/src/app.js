@@ -10,11 +10,9 @@ import authRoutes from './features/auth/auth.routes.js';
 import employeeRoutes from './features/employee/employee.routes.js';
 import dashboardRoutes from './features/dashboard/dashboard.routes.js';
 import organizationRoutes from './features/organization/organization.routes.js';
-import { seedSuperAdmin } from './config/seedData.js';
 
 dotenv.config();
 const app = express();
-seedSuperAdmin();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(helmet());
