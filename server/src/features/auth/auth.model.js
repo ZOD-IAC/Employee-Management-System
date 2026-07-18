@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const authSchema = new mongoose.Schema(
   {
@@ -13,12 +13,17 @@ const authSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["SUPER_ADMIN", "HR", "EMPLOYEE"],
-      default: "EMPLOYEE",
+      enum: ['SUPER_ADMIN', 'HR', 'EMPLOYEE'],
+      default: 'EMPLOYEE',
     },
     isActive: {
       type: Boolean,
       default: true,
+    },
+    refreshToken: {
+      type: String,
+      select: false,
+      default: null,
     },
   },
   {
@@ -26,4 +31,4 @@ const authSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model("Auth", authSchema);
+export default mongoose.model('Auth', authSchema);

@@ -1,38 +1,46 @@
-import bcrypt from "bcrypt";
-import Auth from "./auth.model.js";
-import generateToken from "../../utils/generateToken.js";
+import bcrypt from 'bcrypt';
+import Auth from './auth.model.js';
+const { generateAccessToken, generateRefreshToken } =
+  '../../utils/generateToken';
 
 export const loginService = async ({ email, password }) => {
-  const user = await Auth.findOne({
-    email,
-  });
+  const user = await Auth.findOne({ email }).select('+password');
 
-  if (!user) {
-    throw new Error("Invalid credentials");
-  }
+  if (!user) throw new ApiError(401, 'Invalid credentials');
 
   const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new ApiError(401, 'Invalid credentials');
 
-  if (!isMatch) {
-    throw new Error("Invalid credentials");
-  }
+  if (!user.isActive) throw new ApiError(403, 'Account disabled');
 
-  if (!user.isActive) {
-    throw new Error("Account disabled");
-  }
+  const accessToken = generateAccessToken({ id: user._id, role: user.role });
+  const refreshToken = generateRefreshToken({ id: user._id });
 
-  const token = generateToken({
-    id: user._id,
-    role: user.role,
-  });
+  user.refreshToken = refreshToken;
+  await user.save();
 
   return {
-    token,
-
-    user: {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    },
+    accessToken,
+    refreshToken,
+    user: { id: user._id, email: user.email, role: user.role },
   };
+};
+
+//Update reefresh Token
+export const refreshService = async (token) => {
+  if (!token) throw new ApiError(401, 'No refresh token');
+
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+  } catch {
+    throw new ApiError(401, 'Invalid refresh token');
+  }
+
+  const user = await Auth.findById(decoded.id).select('+refreshToken');
+  if (!user || user.refreshToken !== token)
+    throw new ApiError(401, 'Invalid refresh token');
+
+  const accessToken = generateAccessToken({ id: user._id, role: user.role });
+  return accessToken;
 };
