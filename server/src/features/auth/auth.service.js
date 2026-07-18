@@ -1,7 +1,10 @@
 import bcrypt from 'bcrypt';
 import Auth from './auth.model.js';
-const { generateAccessToken, generateRefreshToken } =
-  '../../utils/generateToken';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from '../../utils/generateToken.js';
+import ApiError from '../../utils/helper.js';
 
 export const loginService = async ({ email, password }) => {
   const user = await Auth.findOne({ email }).select('+password');
@@ -32,6 +35,7 @@ export const refreshService = async (token) => {
 
   let decoded;
   try {
+    console.log(token, '<--- refresh token');
     decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
   } catch {
     throw new ApiError(401, 'Invalid refresh token');

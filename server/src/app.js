@@ -8,11 +8,13 @@ import dotenv from 'dotenv';
 import { errorHandler } from './middleware/error.middleware.js';
 import authRoutes from './features/auth/auth.routes.js';
 import employeeRoutes from './features/employee/employee.routes.js';
-import { bootStrap } from './config/seedData.js';
+import dashboardRoutes from './features/dashboard/dashboard.routes.js';
+import organizationRoutes from './features/organization/organization.routes.js';
+import { seedSuperAdmin } from './config/seedData.js';
 
 dotenv.config();
 const app = express();
-bootStrap();
+seedSuperAdmin();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(helmet());
@@ -24,6 +26,8 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/employee', employeeRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/organization', organizationRoutes);
 
 app.use(errorHandler); // must stay last
 

@@ -13,7 +13,7 @@ const authSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['SUPER_ADMIN', 'HR', 'EMPLOYEE'],
+      enum: ['SUPER_ADMIN', 'HR_MANAGER', 'EMPLOYEE'],
       default: 'EMPLOYEE',
     },
     isActive: {

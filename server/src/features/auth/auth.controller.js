@@ -1,4 +1,4 @@
-import { loginService } from './auth.service.js';
+import { loginService, refreshService } from './auth.service.js';
 import { cookieOptions } from '../../utils/helper.js';
 
 // Login user
