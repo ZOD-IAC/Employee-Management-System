@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PUBLIC_PATHS = ['/login'];
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const accessToken = req.cookies.get('accessToken')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;

@@ -10,7 +10,7 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
@@ -28,7 +28,6 @@ export default function Navbar() {
     router.push('/login');
   };
 
-  console.log(user, '<--- user');
   return (
     <AppBar
       position='fixed'
@@ -41,7 +40,7 @@ export default function Navbar() {
           // onClick={onMenuClick}
           sx={{ mr: 2 }}
         >
-          <MenuIcon />
+          <LocalLibraryIcon />
         </IconButton>
         <Typography variant='h6' sx={{ flexGrow: 1 }}>
           EMS
