@@ -13,7 +13,7 @@ export default function ThemeRegistry({
 }: {
   children: React.ReactNode;
 }) {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<'light' | 'dark'>('dark');
   const theme = createTheme({
     palette: {
       mode,
