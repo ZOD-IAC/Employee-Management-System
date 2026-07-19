@@ -61,22 +61,6 @@ export default function LoginPage() {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: PAGE_BG }}>
-      <Box
-        sx={{
-          display: { xs: 'none', md: 'flex' },
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          width: '44%',
-          bgcolor: PANEL_BG,
-          backgroundImage: isDark
-            ? 'none'
-            : `linear-gradient(160deg, ${INK} 0%, ${INK_LIGHT} 100%)`,
-          color: '#FAFAF8',
-          p: 6,
-        }}
-      >
-        {/* ...unchanged left panel content... */}
-      </Box>
 
       <Box
         sx={{
