@@ -11,29 +11,10 @@ export const login = async (req, res, next) => {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    // res.cookie('refreshToken', result.refreshToken, {
-    //   ...cookieOptions,
-    //   maxAge: 7 * 24 * 60 * 60 * 1000,
-    // });
 
     return res
       .status(200)
       .json({ success: true, message: 'Login successful', user: result.user });
-  } catch (error) {
-    next(error);
-  }
-};
-
-// update access token
-export const refresh = async (req, res, next) => {
-  try {
-    const accessToken = await refreshService(req.cookies.refreshToken);
-
-    res.cookie('accessToken', accessToken, {
-      ...cookieOptions,
-      maxAge: 15 * 60 * 1000,
-    });
-    return res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }

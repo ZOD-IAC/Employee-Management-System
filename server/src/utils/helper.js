@@ -3,7 +3,7 @@ import { Counter } from '../features/employee/employee.model.js';
 export const cookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: 'none',
+  sameSite: 'lax',
 };
 
 export const generateEmployeeId = async (session) => {
