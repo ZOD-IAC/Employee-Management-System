@@ -9,12 +9,12 @@ export const login = async (req, res, next) => {
 
     res.cookie('accessToken', result.accessToken, {
       ...cookieOptions,
-      maxAge: 15 * 60 * 1000,
-    });
-    res.cookie('refreshToken', result.refreshToken, {
-      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+    // res.cookie('refreshToken', result.refreshToken, {
+    //   ...cookieOptions,
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });
 
     return res
       .status(200)
@@ -24,10 +24,11 @@ export const login = async (req, res, next) => {
   }
 };
 
-// update Refresh token
+// update access token
 export const refresh = async (req, res, next) => {
   try {
     const accessToken = await refreshService(req.cookies.refreshToken);
+
     res.cookie('accessToken', accessToken, {
       ...cookieOptions,
       maxAge: 15 * 60 * 1000,
@@ -43,8 +44,17 @@ export const logout = async (req, res, next) => {
   try {
     await Auth.findByIdAndUpdate(req.user.id, { refreshToken: null });
     res.clearCookie('accessToken', cookieOptions);
-    res.clearCookie('refreshToken', cookieOptions);
+    // res.clearCookie('refreshToken', cookieOptions);
     return res.status(200).json({ success: true, message: 'Logged out' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const me = async (req, res, next) => {
+  try {
+    const user = await Auth.findById(req.user.id).select('email role isActive');
+    res.json({ user, ok: true });
   } catch (error) {
     next(error);
   }

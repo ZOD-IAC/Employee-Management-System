@@ -1,4 +1,5 @@
-import Employee from '../employee/employee.model.js';
+import { Employee } from '../employee/employee.model.js';
+import ApiError from '../../utils/ApiError.js';
 
 export const getReporteesService = async (id) => {
   const reportees = await Employee.find({

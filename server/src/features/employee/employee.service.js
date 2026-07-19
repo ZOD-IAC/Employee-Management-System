@@ -1,6 +1,9 @@
 import Auth from '../auth/auth.model.js';
-import Employee from '../employee/employee.model.js';
+import { Employee } from '../employee/employee.model.js';
 import { withTransaction } from '../../utils/withtransaction.js';
+import { generateEmployeeId } from '../../utils/helper.js';
+import ApiError from '../../utils/ApiError.js';
+import bcrypt from 'bcrypt';
 
 export const createEmployeeService = async (
   authData,
@@ -15,13 +18,13 @@ export const createEmployeeService = async (
     const isAuthExist = await Auth.findOne({ email: authData.email }).session(
       session,
     );
-    if (isAuthExist) {
-      throw new ApiError(409, 'Email already exists');
-    }
+    if (isAuthExist) throw new ApiError(409, 'Email already exists');
+
+    const employeeId = await generateEmployeeId(session);
 
     const [auth] = await Auth.create([authData], { session });
     const [employee] = await Employee.create(
-      [{ ...employeeData, authId: auth._id }],
+      [{ ...employeeData, employeeId, authId: auth._id }],
       { session },
     );
     return { auth, employee };
@@ -166,6 +169,7 @@ export const importEmployeesService = async (rows, requesterRole) => {
           row.password || 'Welcome@123',
           10,
         );
+        row.employeeId = await generateEmployeeId();
 
         const [auth] = await Auth.create(
           [

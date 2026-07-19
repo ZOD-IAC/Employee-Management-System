@@ -1,4 +1,4 @@
-import Employee from '../employee/employee.model.js';
+import { Employee } from '../employee/employee.model.js';
 
 export const getDashboardStatsService = async () => {
   const [total, active, inactive, departments] = await Promise.all([

@@ -66,5 +66,10 @@ const employeeSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+const counterSchema = new mongoose.Schema({
+  _id: { type: String, required: true }, // e.g. "employeeId"
+  seq: { type: Number, default: 0 },
+});
 
-export default mongoose.model('Employee', employeeSchema);
+export const Counter = mongoose.model('Counter', counterSchema);
+export const Employee = mongoose.model('Employee', employeeSchema);

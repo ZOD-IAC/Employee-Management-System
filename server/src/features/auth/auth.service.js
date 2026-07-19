@@ -2,9 +2,10 @@ import bcrypt from 'bcrypt';
 import Auth from './auth.model.js';
 import {
   generateAccessToken,
-  generateRefreshToken,
+  // generateRefreshToken,
 } from '../../utils/generateToken.js';
-import ApiError from '../../utils/helper.js';
+import ApiError from '../../utils/ApiError.js';
+import jwt from 'jsonwebtoken';
 
 export const loginService = async ({ email, password }) => {
   const user = await Auth.findOne({ email }).select('+password');
@@ -17,14 +18,14 @@ export const loginService = async ({ email, password }) => {
   if (!user.isActive) throw new ApiError(403, 'Account disabled');
 
   const accessToken = generateAccessToken({ id: user._id, role: user.role });
-  const refreshToken = generateRefreshToken({ id: user._id });
+  // const refreshToken = generateRefreshToken({ id: user._id });
 
-  user.refreshToken = refreshToken;
+  // user.refreshToken = refreshToken;
   await user.save();
 
   return {
     accessToken,
-    refreshToken,
+    // refreshToken,
     user: { id: user._id, email: user.email, role: user.role },
   };
 };
@@ -35,8 +36,8 @@ export const refreshService = async (token) => {
 
   let decoded;
   try {
-    console.log(token, '<--- refresh token');
     decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+    console.log(decoded, '<--- decoded ');
   } catch {
     throw new ApiError(401, 'Invalid refresh token');
   }

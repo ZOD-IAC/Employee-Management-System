@@ -1,7 +1,6 @@
 import { body } from 'express-validator';
 
 export const createEmployeeValidation = [
-  body('employeeId').notEmpty().withMessage('Employee ID is required'),
   body('name').notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Invalid email'),
   body('password')

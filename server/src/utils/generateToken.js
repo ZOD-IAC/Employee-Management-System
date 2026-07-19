@@ -7,8 +7,8 @@ export const generateAccessToken = (payload) => {
   });
 };
 
-export const generateRefreshToken = (payload) => {
-  return jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: '15m',
-  });
-};
+// export const generateRefreshToken = (payload) => {
+//   return jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
+//     expiresIn: '15m',
+//   });
+// };

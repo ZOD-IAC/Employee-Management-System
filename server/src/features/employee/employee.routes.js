@@ -15,7 +15,9 @@ import {
   updateProfile,
   getReportees,
   updateManager,
+  importEmployees,
 } from './employee.controller.js';
+import { upload } from '../../middleware/upload.js';
 
 const router = express.Router();
 
@@ -51,6 +53,13 @@ router.patch(
   '/:id/manager',
   authorize('SUPER_ADMIN', 'HR_MANAGER'),
   updateManager,
+);
+
+router.post(
+  '/import',
+  authorize('SUPER_ADMIN', 'HR_MANAGER'),
+  upload.single('file'),
+  importEmployees,
 );
 
 export default router;
