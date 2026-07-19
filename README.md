@@ -17,7 +17,7 @@ A full-stack Employee Management System with secure authentication, role-based a
 - **RBAC**: 3 roles — Super Admin (full access), HR Manager (create/edit/view, no delete, no Super Admin assignment), Employee (view/edit own profile only)
 - **Employee CRUD**: Auto-generated human-readable Employee ID (`EMP-YYYY-000N`), full field set per spec
 - **Organizational Hierarchy**: Assign reporting manager, view nested org tree, circular-reporting prevention, view direct reports
-- **Search, Filter, Sort**: By name/email, department, status; sortable by joining date and name
+- **Search, Filter, Sort**: By name/email, department, status , isDeleted; sortable by joining date and name
 - **Dashboard**: Total/active/inactive employee counts, department count
 - **Bonus**: Pagination, soft delete, CSV bulk import, dark mode
 
