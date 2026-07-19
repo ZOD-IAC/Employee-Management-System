@@ -21,19 +21,25 @@ const navItems = [
     label: 'Dashboard',
     path: '/dashboard',
     icon: <DashboardIcon />,
-    roles: ['SUPER_ADMIN', 'HR_MANAGER', 'EMPLOYEE'],
+    roles: ['SUPER_ADMIN', 'HR_MANAGER'],
   },
   {
     label: 'Employees',
     path: '/employees',
     icon: <PeopleIcon />,
-    roles: ['SUPER_ADMIN', 'HR_MANAGER', 'EMPLOYEE'],
+    roles: ['SUPER_ADMIN', 'HR_MANAGER'],
   },
   {
     label: 'Organization',
     path: '/organization',
     icon: <AccountTreeIcon />,
-    roles: ['SUPER_ADMIN', 'HR_MANAGER', 'EMPLOYEE'],
+    roles: ['SUPER_ADMIN', 'HR_MANAGER'],
+  },
+  {
+    label: 'My Profile',
+    path: '/profile',
+    icon: <PeopleIcon />,
+    roles: ['HR_MANAGER', 'EMPLOYEE'],
   },
 ];
 

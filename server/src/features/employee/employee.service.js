@@ -41,9 +41,10 @@ export const getEmployeesService = async (query) => {
     order = 'asc',
     page = 1,
     limit = 10,
+    includeDeleted,
   } = query;
 
-  const filter = { isDeleted: false };
+  const filter = includeDeleted === 'true' ? {} : { isDeleted: false };
 
   if (search) {
     filter.$or = [
@@ -51,7 +52,9 @@ export const getEmployeesService = async (query) => {
       { email: { $regex: search, $options: 'i' } },
     ];
   }
-  if (department) filter.department = department;
+  if (department) {
+    filter.department = { $regex: `^${department}$`, $options: 'i' };
+  }
   if (status) filter.status = status;
 
   const sortField = ['joiningDate', 'name'].includes(sortBy)

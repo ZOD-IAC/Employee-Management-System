@@ -18,6 +18,8 @@ import {
   Chip,
   TableSortLabel,
   Stack,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -36,6 +38,7 @@ function EmployeeListContent() {
   const [status, setStatus] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'joiningDate'>('joiningDate');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [includeDeleted, setIncludeDeleted] = useState(false);
 
   const { showError } = useSnackbar();
   const { user } = useAuth();
@@ -55,6 +58,7 @@ function EmployeeListContent() {
             status: status || undefined,
             sortBy,
             order,
+            includeDeleted: includeDeleted ? 'true' : undefined,
           },
         });
         setEmployees(res.data.employees);
@@ -65,7 +69,7 @@ function EmployeeListContent() {
     };
 
     fetchEmployees();
-  }, [page, limit, search, department, status, sortBy, order]);
+  }, [page, limit, search, department, status, sortBy, order, includeDeleted]);
 
   const handleSort = (field: 'name' | 'joiningDate') => {
     if (sortBy === field) {
@@ -139,6 +143,18 @@ function EmployeeListContent() {
           <MenuItem value='ACTIVE'>Active</MenuItem>
           <MenuItem value='INACTIVE'>Inactive</MenuItem>
         </TextField>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={includeDeleted}
+              onChange={(e) => {
+                setIncludeDeleted(e.target.checked);
+                setPage(0);
+              }}
+            />
+          }
+          label='Show deleted'
+        />
       </Stack>
 
       <TableContainer component={Paper}>
@@ -216,7 +232,7 @@ function EmployeeListContent() {
 
 export default function EmployeeListPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'HR_MANAGER']}>
       <EmployeeListContent />
     </ProtectedRoute>
   );

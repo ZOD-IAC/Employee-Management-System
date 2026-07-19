@@ -9,6 +9,7 @@ import {
 import bcrypt from 'bcrypt';
 import ApiError from '../../utils/ApiError.js';
 import { parseCsv } from '../../utils/helper.js';
+import { Employee } from '../employee/employee.model.js';
 
 // create new Employee
 export const createEmployee = async (req, res, next) => {
@@ -62,6 +63,20 @@ export const getEmployees = async (req, res, next) => {
   try {
     const result = await getEmployeesService(req.query);
     res.status(200).json({ success: true, ...result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMyProfile = async (req, res, next) => {
+  console.log('HIT getMyProfile'); // temporary
+  try {
+    const employee = await Employee.findOne({ authId: req.user.id }).populate(
+      'authId',
+      'email role isActive',
+    );
+    if (!employee) throw new ApiError(404, 'Profile not found');
+    res.status(200).json({ success: true, employee });
   } catch (error) {
     next(error);
   }

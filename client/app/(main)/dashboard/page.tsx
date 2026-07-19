@@ -81,7 +81,7 @@ function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'HR_MANAGER']}>
       <DashboardContent />
     </ProtectedRoute>
   );

@@ -18,7 +18,8 @@ export default function ProtectedRoute({
 
   useEffect(() => {
     if (!loading && user && allowedRoles && !allowedRoles.includes(user.role)) {
-      router.push('/dashboard');
+      const fallback = user.role === 'EMPLOYEE' ? '/profile' : '/dashboard';
+      router.push(fallback);
     }
   }, [loading, user, allowedRoles, router]);
 

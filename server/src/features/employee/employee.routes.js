@@ -16,6 +16,7 @@ import {
   getReportees,
   updateManager,
   importEmployees,
+  getMyProfile,
 } from './employee.controller.js';
 import { upload } from '../../middleware/upload.js';
 
@@ -33,7 +34,9 @@ router.post(
 
 router.get('/', authorize('SUPER_ADMIN', 'HR_MANAGER'), getEmployees);
 
-router.get('/:id', getEmployeeById); // self or admin/hr — check in controller
+router.get('/profile/me', getMyProfile);   // MUST stay above '/:id'
+
+router.get('/:id', getEmployeeById);
 
 router.put(
   '/:id',
