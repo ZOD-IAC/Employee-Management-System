@@ -137,7 +137,6 @@ function CreateEmployeeContent() {
           >
             <MenuItem value='EMPLOYEE'>Employee</MenuItem>
             <MenuItem value='HR_MANAGER'>HR Manager</MenuItem>
-            <MenuItem value='SUPER_ADMIN'>Super Admin</MenuItem>
           </TextField>
           <Stack direction='row' spacing={2}>
             <Button
